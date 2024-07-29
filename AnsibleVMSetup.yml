@@ -8,12 +8,22 @@
         upgrade: dist
         autoremove: yes
 
-    - name: Install Node.js 18
-      shell: curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+    - name: Install curl
+      apt:
+        name: curl
+        state: present
+
+    - name: Remove existing Node.js version
+      apt:
+        name: nodejs
+        state: absent
+
+    - name: Install Node.js 20 setup script
+      shell: curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
       args:
         executable: /bin/bash
-        
-    - name: Install Node.js package
+
+    - name: Install Node.js 20 and npm
       apt:
         name: nodejs
         state: present
@@ -89,4 +99,3 @@
         name: "@azure/static-web-apps-cli"
         state: present
         global: yes
-
